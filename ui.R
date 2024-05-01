@@ -1,5 +1,6 @@
-ui <- dashboardPage(
-  skin = "purple",
+library(shiny)
+
+shinyUI(skin = "purple",
   dashboardHeader(title = "Clinical Dashboard"),
   dashboardSidebar(
     sidebarMenu(
@@ -74,5 +75,4 @@ If the p-value is greater than or equal to 0.05, it suggests that there is no st
                             )"))
       )
     )
-  )
-)
+  ))

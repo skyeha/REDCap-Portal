@@ -1,11 +1,3 @@
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    https://shiny.posit.co/
-#
-
-#install packages and library
 library(mongolite)
 library(forcats)
 library(tidyr)
@@ -23,12 +15,6 @@ library(plotly)
 library(ggsurvfit)
 library(stringr)
 
-# #read local database
-# heart_disease_data <- read.csv("data/heart_disease_data.csv")
-# diabetes_data <- read.csv("data/diabetes_data.csv")
-# non_standard_data <- read.csv("data/non_standard_data.csv")
-
-# Set up MongoDB connection
 mongo_connection <- function(collection) {
   mongolite::mongo(
     collection = collection,
@@ -210,7 +196,8 @@ get_kaplan_meier_plot <- function(data, time_unit = "Day") {
   ggplotly(p)
 }
 
-server <- function(input, output, session) {
+shinyServer(
+    function(input, output, session) {
   
   #load local data
   geo_data1 <- get_tidy_dataframe(heart_disease_data)$geo_data
@@ -486,3 +473,5 @@ server <- function(input, output, session) {
     }
   }
 }
+    
+)
