@@ -1,4 +1,19 @@
+library(mongolite)
+library(forcats)
+library(tidyr)
+library(dplyr)
+library(leaflet)
+library(maps)
+library(sf)
+library(ggplot2)
 library(shiny)
+library(shinydashboard)
+library(survival)
+library(survminer)
+library(ggfortify)
+library(plotly)
+library(ggsurvfit)
+library(stringr)
 
 shinyUI(skin = "purple",
   dashboardHeader(title = "Clinical Dashboard"),
