@@ -1,5 +1,3 @@
-#
-# This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
 # Find out more about building applications with Shiny here:
@@ -8,6 +6,7 @@
 #
 
 #install packages and library
+library(mongolite)
 library(forcats)
 library(tidyr)
 library(dplyr)
@@ -24,11 +23,30 @@ library(plotly)
 library(ggsurvfit)
 library(stringr)
 
-#read local database
-heart_disease_data <- read.csv("data/heart_disease_data.csv")
-diabetes_data <- read.csv("data/diabetes_data.csv")
-non_standard_data <- read.csv("data/non_standard_data.csv")
+# #read local database
+# heart_disease_data <- read.csv("data/heart_disease_data.csv")
+# diabetes_data <- read.csv("data/diabetes_data.csv")
+# non_standard_data <- read.csv("data/non_standard_data.csv")
 
+# Set up MongoDB connection
+mongo_connection <- function(collection) {
+  mongolite::mongo(
+    collection = collection,
+    # the url consist with username password host_ip port and db_name
+    url = "mongodb://AdminCD:iwannasleep@115.146.84.81:27017/Redcap?authSource=admin"
+  )
+}
+
+# Example to fetch data
+fetch_data <- function(collection) {
+  conn <- mongo_connection(collection)
+  data <- conn$find('{}')
+  return(data)
+}
+
+heart_disease_data <- fetch_data("heartdisease")
+diabetes_data<- fetch_data("diabetes")
+non_standard_data <- fetch_data("non_standard")
 #setup requirements for geomap
 melbourne_suburbs_name <- c(
   "Carlton", "Carlton North", "Docklands", "East Melbourne",
@@ -47,14 +65,11 @@ melbourne_suburbs <- melbourne_suburbs[melbourne_suburbs$LOC_NAME
 
 #function to tidyup csv and return 3 dataframes for visualization: geomap_data, km_data, and info_data
 get_tidy_dataframe <- function(data) {
-  #1. split combined csv into three separated df: patient, condition, medication.
-  #fill NA values in 'redcap_repeat_instrument' column with "patient"
-  data$redcap_repeat_instrument <- dplyr::coalesce(data$redcap_repeat_instrument, "patient")
   
   #split the dataframe into a list of dataframes based on the values in 'redcap_repeat_instrument'
   df_list <- split(data, data$redcap_repeat_instrument)
   
-  df_patient <- df_list[["patient"]]
+  df_patient <- df_list[[1]]
   df_condition <- df_list[["conditions"]]
   df_medication <- df_list[["medications"]]
   
@@ -104,7 +119,10 @@ get_tidy_dataframe <- function(data) {
   
   geo_data <- df_patient %>%
     select(any_of(names(column_mapping))) %>%
-    rename_all(~ column_mapping[.])
+    rename_all(~ column_mapping[.]) %>%
+    mutate(INCOME = as.numeric(INCOME),
+           HEALTHCARE_EXPENSES = as.numeric(HEALTHCARE_EXPENSES),
+           HEALTHCARE_COVERAGE = as.numeric(HEALTHCARE_COVERAGE))
   
   # Add missing columns with all NA values
   missing_columns <- setdiff(names(match_data), names(geo_data))
@@ -192,91 +210,6 @@ get_kaplan_meier_plot <- function(data, time_unit = "Day") {
   ggplotly(p)
 }
 
-
-
-# Define UI for application
-ui <- dashboardPage(
-  skin = "purple",
-  dashboardHeader(title = "Clinical Dashboard"),
-  dashboardSidebar(
-    sidebarMenu(
-      menuItem("Welcome!", tabName = "welcome", icon = icon("home")),
-      menuItem("Map & Suburb Info", tabName = "map_suburb_info", icon = icon("dashboard")),
-      menuItem("Kaplan-Meier Plot", tabName = "km_plot", icon = icon("th"))
-    )
-  ),
-  dashboardBody(
-    tags$head(tags$style(HTML("
-    /* CSS styles to apply globally */
-    p{
-      margin-bottom: 5px;
-    }"))),
-    tabItems(
-      tabItem(tabName = "welcome",
-              fluidRow(tags$div(tags$strong("Welcome!"), style = "font-size: 22px;")),
-              fluidRow(HTML(r"(
-                            <p style="font-size:16px;">This is a Clinical Dashboard offers multiple interactive visualizations.</p>
-                            <p style="font-size:16px;">By inputing a standard RedCap project's API, this dashboard automatically generate mutiple visualization to provide user a better understanding of the studied disease.</p>
-                            <p style="font-size:16px;">Currently, it allows user to view disease distribution by suburb through a interactive map that supports Melbourne and entire Victora region. 
-                            It also provides a Kaplan-Meier Plot that compare the effects of most commonly used two medicine on patient's death rate.</p>
-                            <p style="font-size:16px;">You can preview its effect by selecting three defaultly provided database. You can find the original RedCap through link below.
-                            Notice that all of these database use stimulated data generated from <a href="https://github.com/synthetichealth/synthea" target="_blank">Synthea<sup>TM</sup></a>, a synthetic patient generator that models the medical history of synthetic patients, for testing purpose.</p>
-                            <br></br>
-                            <p style="font-size:16px;"><b>Hyperlink to database</b>:</p>
-                            <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=658" target="_blank">TEST Ischemic heart disease in melbourne</a></p>
-                            <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=656" target="_blank">TEST diabetes in melbourne</a></p>
-                            <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=657" target="_blank">TEST Non-standard Dataset</a></p>
-                            <br></br>
-                            )")),
-              fluidRow(
-                box(status = "primary", selectInput("databaseSelect", "Select Database to Preview", 
-                                   choices = c("Ischemic Heart Disease in Melbourne", "Diabetes in Melbourne", "Non-Standard Database"))
-                )
-              )
-      ),
-      tabItem(tabName = "map_suburb_info",
-              fluidRow(
-                tags$div(tags$strong("Interactive Map for", textOutput("databaseName1", inline = TRUE)), style = "font-size: 22px;")
-              ),    
-              leafletOutput("melbourneMap"),
-              tabsetPanel(
-                tabPanel("Suburb Info", 
-                         fluidRow(box(status = "primary", uiOutput("suburbInfo"))),
-                         fluidRow(HTML(r"(<p>Hover on to preview suburb, click on to select suburb.</p>)"))), 
-                tabPanel("Local Heatmaps",
-                         fluidRow(uiOutput("suburbNameHeatmap")),
-                         fluidRow(
-                           column(width = 4, plotOutput("raceSurvivalPlot")),
-                           column(width = 4, plotOutput("incomeRangeSurvivalPlot")),
-                           column(width = 4, plotOutput("healthcareExpensesSurvivalPlot"))),
-                         fluidRow(HTML(r"(
-                     <p><b>Note</b>:</p>
-                     <p><b>Ethnicity</b>: Individuals are categorized as either "Aboriginal and Torres Strait Islander" or "Others".</p>
-                     <p><b>Income</b>: Income levels are grouped into the following bins: "0-30k", "30-50k", "50-70k", "70-100k", and ">100k".</p>
-                     <p><b>Healthcare Expenses</b>: Healthcare expenses are categorized into the following bins: "0-50k", "50-100k", "100-200k", "200-500k", "500k-1M", "1M-2M", and ">2M".</p>
-                     )"))
-                )
-              )
-      ),
-      tabItem(tabName = "km_plot", 
-              fluidRow(
-                tags$div(tags$strong("Interactive Kaplan-Meier Plot for", textOutput("databaseName2", inline = TRUE)), style = "font-size: 22px;")
-              ),
-              plotlyOutput("kmPlot"),
-              fluidRow(HTML(r"(
-              <p><b>Note</b>:</p>
-              <p>The Kaplan-Meier Plot displayed above utilizes "Year" as its time unit.</p>
-              <p>The logrank p-value indicates whether there is a statistically significant difference in survival curves between the groups being compared. If the p-value is less than 0.05, it suggests that there is a statistically significant difference in survival between the groups. 
-If the p-value is greater than or equal to 0.05, it suggests that there is no statistically significant difference in survival between the groups.</p>
-                            )"))
-      )
-    )
-  )
-)
-
-
-
-# Define server logic
 server <- function(input, output, session) {
   
   #load local data
@@ -553,6 +486,3 @@ server <- function(input, output, session) {
     }
   }
 }
-
-# Run the application 
-shinyApp(ui = ui, server = server)
