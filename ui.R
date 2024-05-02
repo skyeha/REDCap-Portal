@@ -72,8 +72,16 @@ ui <- dashboardPage(
             tabPanel("Local Heatmaps",
                 fluidRow(uiOutput("suburbNameHeatmap")),
                 fluidRow(
-                  column(width=4, plotOutput("raceSurvivalPlot"))
-                ))
+                  column(width=4, plotOutput("raceSurvivalPlot")),
+                  column(width = 4, plotOutput("incomeRangeSurvivalPlot")),
+                  column(width = 4, plotOutput("healthcareExpensesSurvivalPlot"))),
+                fluidRow(HTML(r"(
+                  <p><b>Note</b>:</p>
+                  <p><b>Ethnicity</b>: Individuals are categorized as either "Aboriginal and Torres Strait Islander" or "Others".</p>
+                  <p><b>Income</b>: Income levels are grouped into the following bins: "0-30k", "30-50k", "50-70k", "70-100k", and ">100k".</p>
+                  <p><b>Healthcare Expenses</b>: Healthcare expenses are categorized into the following bins: "0-50k", "50-100k", "100-200k", "200-500k", "500k-1M", "1M-2M", and ">2M".</p>
+                )"))  
+            )
           )
       )
       
