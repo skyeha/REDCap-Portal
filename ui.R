@@ -15,7 +15,9 @@ ui <- dashboardPage(
     sidebarMenu(
       
       # Sidebar menu item for a dashboard page
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+      menuItem("Welcome", tabName = "welcome", icon = icon("home")),
+      menuItem("Map & Suburb Info", tabName = "map_suburb_info", icon = icon("dashboard")),
+      menuItem("Kaplan-Meier Plot", tabName = "km_plot", icon = icon("th"))
       
       # Add more menu items if needed
       # menuItem("Page 2", tabName = "page2", icon = icon("file")),
