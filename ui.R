@@ -56,6 +56,11 @@ ui <- dashboardPage(
           box(status = "primary", selectInput("databaseSelect", "Select Database to Preview",
             choices = c("Ischemic Heart Disease in Melbourne", "Diabetes in Melbourne", "Non-standard Database")))
         )
+      ),
+      tabItem(tabName = "map_suburb_info",
+          fluidRow(
+            tags$div(tags$strong("Interactive Map for", textOutput("databaseName1", inline=TRUE)), stye="font-size: 22px")
+          )
       )
       
       # Add more tabItems for additional dashboard pages
