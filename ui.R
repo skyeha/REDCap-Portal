@@ -1,6 +1,6 @@
 library(shiny)
 library(shinydashboard)
-library(stringr)
+
 
 # Define UI for application
 ui <- dashboardPage(
