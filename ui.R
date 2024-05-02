@@ -64,7 +64,7 @@ ui <- dashboardPage(
           ),
           leafletOutput("melbourneMap"),
           tabsetPanel(
-            tabPanel(
+            tabPanel(title = "Surburb Information",
                 fluidRow(box(status="primary", uiOutput("surburbInfo"))))
           )
       )
