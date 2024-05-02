@@ -45,13 +45,17 @@ ui <- dashboardPage(
           <p style="font-size:16px;">You can preview its effect by selecting three defaultly provided database. You can find the original RedCap through link below.
           Notice that all of these database use stimulated data generated from <a href="https://github.com/synthetichealth/synthea" target="_blank">Synthea<sup>TM</sup></a>, a synthetic patient generator that models the medical history of synthetic patients, for testing purpose.</p>
           <br></br>
+          <p style="font-size:16px;"><b>Hyperlink to database</b>:</p>
+          <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=658" target="_blank">TEST Ischemic heart disease in melbourne</a></p>
+          <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=656" target="_blank">TEST diabetes in melbourne</a></p>
+          <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=657" target="_blank">TEST Non-standard Dataset</a></p>
+          <br></br>
         )")),
         # Example: Create a box with some content
-        box(
-          title = "My Dashboard",
-          "This is the content of my dashboard."
+        fluidRow(
+          box(status = "primary", selectInput("databaseSelect", "Select Database to Preview",
+            choices = c("Ischemic Heart Disease in Melbourne", "Diabetes in Melbourne", "Non-standard Database")))
         )
-        
       )
       
       # Add more tabItems for additional dashboard pages
