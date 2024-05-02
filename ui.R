@@ -60,7 +60,7 @@ ui <- dashboardPage(
       ),
       tabItem(tabName = "map_suburb_info",
           fluidRow(
-            tags$div(tags$strong("Interactive Map for", textOutput("databaseName1", inline=TRUE)), stye="font-size: 22px")
+            tags$div(tags$strong("Interactive Map for", textOutput("databaseName1", inline=TRUE)), stye="font-size: 22px;")
           ),
           leafletOutput("melbourneMap"),
           tabsetPanel(
