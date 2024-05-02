@@ -89,7 +89,13 @@ ui <- dashboardPage(
           fluidRow(
             tags$div(tags$strong("Interactive Kaplan-Meier Plot for", textOutput("databaseName2", inline=TRUE)), style = "font-size:22px;")
           ),
-          plotlyOutput("kmPlot")
+          plotlyOutput("kmPlot"),
+          fluidRow(HTML(r"(
+            <p><b>Note</b>:</p>
+            <p>The Kaplan-Meier Plot displayed above utilizes "Year" as its time unit.</p>
+            <p>The logrank p-value indicates whether there is a statistically significant difference in survival curves between the groups being compared. If the p-value is less than 0.05, it suggests that there is a statistically significant difference in survival between the groups. 
+            If the p-value is greater than or equal to 0.05, it suggests that there is no statistically significant difference in survival between the groups.</p>
+          )"))
       )
       
       # Add more tabItems for additional dashboard pages
