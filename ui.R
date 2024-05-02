@@ -37,7 +37,9 @@ ui <- dashboardPage(
       tabItem(
         tabName = "welcome",
         fluidRow(tags$div(tags$strong("Welcome!"), style = "font-size:22px")),
-        
+        fluidRow(HTML(r"(
+          <p style="font-size:16px">This is a Clinical Dashboard that offers multiple interactive visualisations </p>
+        )")),
         # Example: Create a box with some content
         box(
           title = "My Dashboard",
