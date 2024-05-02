@@ -63,10 +63,10 @@ ui <- dashboardPage(
             tags$div(tags$strong("Interactive Map for", textOutput("databaseName1", inline=TRUE)), stye="font-size: 22px")
           ),
           leafletOutput("melbourneMap")
-          # tabsetPanel(
-          #   tabPanel("Surburb Information",
+          tabsetPanel(
+            tabPanel("Surburb Information")
           #       fluidRow(box(status="primary", uiOutput("surburbInfo")))
-          # )
+          )
       )
       
       # Add more tabItems for additional dashboard pages
