@@ -1,11 +1,12 @@
 library(shiny)
 library(shinydashboard)
+library(stringr)
 
 # Define UI for application
 ui <- dashboardPage(
-  
+  skin = "purple"
   # Application title
-  dashboardHeader(title = "My Shiny Dashboard"),
+  dashboardHeader(title = "Clinical Dashboard"),
   
   # Sidebar with a menu
   dashboardSidebar(
@@ -14,7 +15,7 @@ ui <- dashboardPage(
     sidebarMenu(
       
       # Sidebar menu item for a dashboard page
-      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+      menuItem("Welcome!", tabName = "welcome", icon = icon("home"))
       
       # Add more menu items if needed
       # menuItem("Page 2", tabName = "page2", icon = icon("file")),
