@@ -87,7 +87,8 @@ ui <- dashboardPage(
       tabItem(tabName = "km_plot",
           fluidRow(
             tags$div(tags$strong("Interactive Kaplan-Meier Plot for", textOutput("databaseName2", inline=TRUE)), style = "font-size:22px;")
-          )
+          ),
+          plotlyOutput("kmPlot")
       )
       
       # Add more tabItems for additional dashboard pages
