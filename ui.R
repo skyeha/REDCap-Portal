@@ -4,7 +4,7 @@ library(shinydashboard)
 
 # Define UI for application
 ui <- dashboardPage(
-  skin = "purple"
+  skin = "purple",
   # Application title
   dashboardHeader(title = "Clinical Dashboard"),
   
