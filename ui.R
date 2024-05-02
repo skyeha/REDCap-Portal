@@ -65,7 +65,10 @@ ui <- dashboardPage(
           leafletOutput("melbourneMap"),
           tabsetPanel(
             tabPanel(title = "Surburb Information",
-                fluidRow(box(status="primary", uiOutput("surburbInfo"))))
+                fluidRow(box(status="primary", uiOutput("surburbInfo"))),
+                fluidRow(HTML(r"(
+                  <p>Hover on to preview surburb, click on to select surburb</p>
+                )")))
           )
       )
       
