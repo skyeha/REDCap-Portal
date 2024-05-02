@@ -64,11 +64,16 @@ ui <- dashboardPage(
           ),
           leafletOutput("melbourneMap"),
           tabsetPanel(
-            tabPanel(title = "Surburb Information",
-                fluidRow(box(status="primary", uiOutput("surburbInfo"))),
+            tabPanel(title = "Suburb Information",
+                fluidRow(box(status="primary", uiOutput("suburbInfo"))),
                 fluidRow(HTML(r"(
-                  <p>Hover on to preview surburb, click on to select surburb</p>
-                )")))
+                  <p>Hover on to preview suburb, click on to select suburb</p>
+                )"))),
+            tabPanel("Local Heatmaps",
+                fluidRow(uiOutput("suburbNameHeatmap")),
+                fluidRow(
+                  column(width=4, plotOutput("raceSurvivalPlot"))
+                ))
           )
       )
       
