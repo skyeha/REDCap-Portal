@@ -19,25 +19,24 @@ ui <- dashboardPage(
       menuItem("Map & Suburb Info", tabName = "map_suburb_info", icon = icon("dashboard")),
       menuItem("Kaplan-Meier Plot", tabName = "km_plot", icon = icon("th"))
       
-      # Add more menu items if needed
-      # menuItem("Page 2", tabName = "page2", icon = icon("file")),
-      # menuItem("Page 3", tabName = "page3", icon = icon("info"))
-      
     )
     
   ),
   
   # Body content
   dashboardBody(
-    
+    tags$head(tags$style(HTML("
+    /* CSS styles to apply globally*/
+    p {
+      margin-bottom: 5px;
+    }"))), 
     # Main dashboard tab content
     tabItems(
       
       # Dashboard tab
       tabItem(
-        tabName = "dashboard",
-        
-        # Dashboard content goes here
+        tabName = "welcome",
+        fluidRow(tags$div(tags$strong("Welcome!"), style = "font-size:22px")),
         
         # Example: Create a box with some content
         box(
