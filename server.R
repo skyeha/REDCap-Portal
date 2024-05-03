@@ -45,12 +45,12 @@ server <- function(input, output, session) {
   info_df3 <- get_tidy_dataframe(non_standard_data)$info_df
   
   # # Reactive values to manage data filtering
-  # filtered_data <- reactive({
-  #   switch(input$databaseSelect,
-  #          "Ischemic Heart Disease in Melbourne" = km_data1,
-  #          "Diabetes in Melbourne" = km_data2,
-  #          "Non-Standard Database" = km_data3)
-  # })
+  filtered_data <- reactive({
+    switch(input$databaseSelect,
+           "Ischemic Heart Disease in Melbourne" = km_data1,
+           "Diabetes in Melbourne" = km_data2,
+           "Non-Standard Database" = km_data3)
+  })
   
   patient_data <- reactive({
     switch(input$databaseSelect,
