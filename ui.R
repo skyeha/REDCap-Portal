@@ -53,15 +53,9 @@ ui <- dashboardPage(
           <p style="font-size:16px;"><a href="https://redcap.wehi.edu.au/redcap_v14.1.5/ProjectSetup/index.php?pid=657" target="_blank">TEST Non-standard Dataset</a></p>
           <br></br>
         )")),
-        fluidRow(
-          box(
-            title = "Redirect Button",
-            solidHeader = TRUE,
-            collapsible = TRUE,
-            width = 6,
-            # Create a button
-            actionButton("redirectButton", "Redirect to Website")
-          )
+        fluidRow(HTML(r"(
+          <p style="font-size:16px"><a href="http://115.146.86.176/">Click here to go back to the data registry</a></p> 
+        )")
         ),
         # Example: Create a box with some content
         fluidRow(

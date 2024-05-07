@@ -31,18 +31,7 @@ library(stringr)
 # Define server logic
 server <- function(input, output, session) {
   # button to link back to registry
-  openWebsite <- function(url) {
-    session$sendCustomMessage(type = "open_url", message = url)
-  }
-  
-  # Event handler for button click
-  observeEvent(input$redirectButton, {
-    # URL to redirect to
-    websiteURL <- "http://115.146.86.176/"
-    
-    # Open website in a new tab
-    openWebsite(websiteURL)
-  })
+
 
   
   #load local data
