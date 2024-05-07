@@ -30,6 +30,20 @@ library(stringr)
 
 # Define server logic
 server <- function(input, output, session) {
+  # button to link back to registry
+  openWebsite <- function(url) {
+    session$sendCustomMessage(type = "open_url", message = url)
+  }
+  
+  # Event handler for button click
+  observeEvent(input$redirectButton, {
+    # URL to redirect to
+    websiteURL <- "http://115.146.86.176/"
+    
+    # Open website in a new tab
+    openWebsite(websiteURL)
+  })
+
   
   #load local data
   geo_data1 <- get_tidy_dataframe(heart_disease_data)$geo_data
