@@ -150,7 +150,7 @@ server <- function(input, output, session) {
   observe(
     params <- parseQueryString(session$clientData$url_search)
 
-    if ("toRegistry" %in% names(params)) {
+    if ("id" %in% names(params)) {
       toRegistry_id <- params$toRegistry
 
       onClick <- paste0("location.href='http://115.146.86.176/view/", toRegistry_id, "';")
