@@ -60,7 +60,8 @@ ui <- dashboardPage(
         fluidRow(
           actionButton(inputId='toRegistry',
             label="Back to registry",
-            icon = icon("th"))
+            icon = icon("th"),
+            onclick= "window.history.back()")
         ),
         # Example: Create a box with some content
         fluidRow(
