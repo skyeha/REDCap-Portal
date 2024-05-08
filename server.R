@@ -34,6 +34,7 @@ server <- function(input, output, session) {
   observe({
     query <- parseQueryString(session$clientData$url_search)
     previous_url <- query$previous_url
+    print(previous_url)
   })
 
   observeEvent(input$redirectButton, {
