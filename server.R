@@ -31,17 +31,18 @@ library(stringr)
 # Define server logic
 server <- function(input, output, session) {
   # button to link back to registry
-  observe({
-    query <- parseQueryString(session$clientData$url_search)
-    previous_url <- query$previous_url
-    print(previous_url)
+  output$ui_open_tab_button <- renderUI({
+      shiny::a(
+        h4(icon("th"),
+           paste0("Wiki Link Number: ",input$slider),
+           class = "btn btn-default action-button",
+           style = "fontweight:600"),
+        target = "_blank",
+        href = paste0("https://en.wikipedia.org/wiki/",input$slider)
+  )
   })
-
-  observeEvent(input$redirectButton, {
-    query <- parseQueryString(session$clientData$url_search)
-    previous_url <- query$previous_url
-    js <- paste0("window.location.href= '", previous_url, "';")
-    runjs(js)
+  output$wiki <- renderUI({
+    tags$iframe(src=paste0("https://en.wikipedia.org/wiki/",input$slider), height=1000, width="100%")
   })
   
   #load local data
