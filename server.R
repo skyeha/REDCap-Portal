@@ -30,20 +30,6 @@ library(stringr)
 
 # Define server logic
 server <- function(input, output, session) {
-  # button to link back to registry
-  # observe({
-  #   query <- parseQueryString(session$clientData$url_search)
-
-  #   # Ignore if URL query is null
-
-  #   if (!is.null(query[['backToRegistry']])) {
-
-  #   }
-  # })
-
-  observeEvent(input$backToRegistry, {
-    session$sendCustomMessage(type='testmessage', message = 'kekw')
-  })
   #load local data
   geo_data1 <- get_tidy_dataframe(heart_disease_data)$geo_data
   km_data1 <- get_tidy_dataframe(heart_disease_data)$km_data
@@ -158,6 +144,12 @@ server <- function(input, output, session) {
     # when hover on
     hover_suburb_LOC_PID <- input$melbourneMap_shape_mouseover$id
     update_suburb_info(hover_suburb_LOC_PID)
+
+    # button to link back to registry
+    query <- parseQueryString(session$clientData$url_search)
+    reg_id <- query[['id']]
+    js <- paste0("location.href = 'http://115.146.86.176/view/", reg_id, "'")
+    runjs(js)
   })
   
   observeEvent(input$melbourneMap_shape_click, {

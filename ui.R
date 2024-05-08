@@ -58,7 +58,7 @@ ui <- dashboardPage(
         # )")
         # ),
         fluidRow(
-          actionButton(inputId='backToRegistry',
+          actionButton(inputId='toRegistry',
             label="Back to registry",
             icon = icon("th"))
         ),
