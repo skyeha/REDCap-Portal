@@ -61,7 +61,7 @@ ui <- dashboardPage(
           actionButton(inputId='ab2',
             label="Wiki Main Link",
             icon = icon("th"),
-            onclick=paste0("window.open('https://en.wikipedia.org/wiki/','_blank')"))
+            onclick= "window.history.back()")
         ),
         # Example: Create a box with some content
         fluidRow(
