@@ -58,8 +58,8 @@ ui <- dashboardPage(
         # )")
         # ),
         fluidRow(
-          actionButton(inputId='ab2',
-            label="Wiki Main Link",
+          actionButton(inputId='backToRegistry',
+            label="Back to registry",
             icon = icon("th"),
             onclick= "window.history.back()")
         ),
