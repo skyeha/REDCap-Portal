@@ -147,12 +147,17 @@ server <- function(input, output, session) {
     
   })
 
-  observeEvent(input$toRegistry, {
-    query <- parseQueryString(session$clientData$url_search)
-    reg_id <- query[['id']]
-    js <- paste0("location.href = 'http://115.146.86.176/view/", reg_id, "'")
-    runjs(js)
-  })
+  observe(
+    params <- parseQueryString(session$clientData$url_search)
+
+    if ("toRegistry" %in% names(params)) {
+      toRegistry_id <- params$toRegistry
+
+      onClick <- paste0("location.href='", toRegistry_id, "';")
+
+      updateActionButton(session, "toRegistry", onClick = onClick)
+    }
+  )
   
   observeEvent(input$melbourneMap_shape_click, {
     # when click on
