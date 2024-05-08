@@ -144,8 +144,10 @@ server <- function(input, output, session) {
     # when hover on
     hover_suburb_LOC_PID <- input$melbourneMap_shape_mouseover$id
     update_suburb_info(hover_suburb_LOC_PID)
+    
+  })
 
-    # button to link back to registry
+  observeEvent(input$toRegistry, {
     query <- parseQueryString(session$clientData$url_search)
     reg_id <- query[['id']]
     js <- paste0("location.href = 'http://115.146.86.176/view/", reg_id, "'")
