@@ -58,7 +58,10 @@ ui <- dashboardPage(
         # )")
         # ),
         fluidRow(
-          actionButton("redirectButton", "Back to data registry")
+          actionButton(inputId='ab2',
+            label="Wiki Main Link",
+            icon = icon("th"),
+            onclick=paste0("window.open('https://en.wikipedia.org/wiki/','_blank')"))
         ),
         # Example: Create a box with some content
         fluidRow(
