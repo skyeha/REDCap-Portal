@@ -31,11 +31,17 @@ library(stringr)
 # Define server logic
 server <- function(input, output, session) {
   # button to link back to registry
-  observeEvent(input$redirectButton, {
-    js <- "window.history.back"
-    runjs(js)
+  observe({
+    query <- parseQueryString(session$clientData$url_search)
+    previous_url <- query$previous_url
   })
 
+  observeEvent(input$redirectButton, {
+    query <- parseQueryString(session$clientData$url_search)
+    previous_url <- query$previous_url
+    js <- paste0("window.location.href= '", previous_url, "';")
+    runjs(js)
+  })
   
   #load local data
   geo_data1 <- get_tidy_dataframe(heart_disease_data)$geo_data
