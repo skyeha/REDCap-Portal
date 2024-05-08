@@ -31,20 +31,19 @@ library(stringr)
 # Define server logic
 server <- function(input, output, session) {
   # button to link back to registry
-  # output$ui_open_tab_button <- renderUI({
-  #     shiny::a(
-  #       h4(icon("th"),
-  #          paste0("Wiki Link Number: ",input$slider),
-  #          class = "btn btn-default action-button",
-  #          style = "fontweight:600"),
-  #       target = "_blank",
-  #       href = paste0("https://en.wikipedia.org/wiki/",input$slider)
-  # )
+  # observe({
+  #   query <- parseQueryString(session$clientData$url_search)
+
+  #   # Ignore if URL query is null
+
+  #   if (!is.null(query[['backToRegistry']])) {
+
+  #   }
   # })
-  # output$wiki <- renderUI({
-  #   tags$iframe(src=paste0("https://en.wikipedia.org/wiki/",input$slider), height=1000, width="100%")
-  # })
-  
+
+  observeEvent(input$backToRegistry, {
+    session$sendCustomMessage(type='testmessage', message = 'kekw')
+  })
   #load local data
   geo_data1 <- get_tidy_dataframe(heart_disease_data)$geo_data
   km_data1 <- get_tidy_dataframe(heart_disease_data)$km_data
