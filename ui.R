@@ -58,7 +58,7 @@ ui <- dashboardPage(
         # )")
         # ),
         fluidRow(
-          actionButton("redirectButton", "Redirect to data registry")
+          actionButton("redirectButton", "Back to data registry")
         ),
         # Example: Create a box with some content
         fluidRow(

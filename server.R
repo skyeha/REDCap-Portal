@@ -31,7 +31,10 @@ library(stringr)
 # Define server logic
 server <- function(input, output, session) {
   # button to link back to registry
-
+  observeEvent(input$redirectButton, {
+    js <- "window.history.back"
+    runjs(js)
+  })
 
   
   #load local data
