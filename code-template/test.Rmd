@@ -11,9 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction
 
-This R markdown file includes code template that were used to process and generate visualisations for the dataset **Diabetes in Melbourne**, **Ischemic Heart Disease in Melbourne**, and **Non-standard dataset**. Feel free to copy this code and modify for your analysis purposes.
+This R markdown file includes code template that were used to process and generate visualisations for the dataset **Non-standard dataset**. Feel free to copy this code and modify for your analysis purposes.
 
-Click [here](http://115.146.86.176/view/DDC0002) to go back to the data registry
+Click [here](http://115.146.86.176/view/DDC0003) to go back to the data registry
 
 # Code
 
